@@ -71,5 +71,89 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # Running React from Craco 
 
-In this project simple project, we are using Tailwindcss a CSS asset : [https://tailwindcss.com/](Tailwind)
+In this project simple project, we are using Tailwindcss a CSS asset : [Tailwind](https://tailwindcss.com/)
 
+In order to run React with Tailwind compilation, we must use those directives : 
+
+- `npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9`
+
+Create React App doesn’t support PostCSS 8 yet so you need to install the Tailwind CSS v2.0 PostCSS 7 compatibility build for now.
+
+## Install and configure CRACO
+Since Create React App doesn’t let you override the PostCSS configuration natively, we also need to install CRACO to be able to configure Tailwind:
+
+- `npm install @craco/craco`
+  
+Once it’s installed, update your scripts in your package.json file to use craco instead of react-scripts for all scripts except eject
+
+```{
+    // ...
+    "scripts": {
+     "start": "craco start",
+     "build": "craco build",
+     "test": "craco test",
+      "eject": "react-scripts eject"
+    },
+  }
+
+```
+
+- Next, create a ``craco.config.js`` at the root of our project and add the tailwindcss and autoprefixer as PostCSS plugins:
+
+```// craco.config.js
+module.exports = {
+  style: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer'),
+      ],
+    },
+  },
+}
+```
+- Initialize your Tailwind : `npx tailwindcss-cli@latest init`
+  
+- After installing Tailwind, import the main file of tailwind,``talwind.css`` in your React main file `index.js`
+
+```Tailwind.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+```index.js
+
+import React from 'react';
+  import ReactDOM from 'react-dom';
+ import './Tailwind.css';
+  import App from './App';
+ 
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+
+
+```
+
+- Don't forget to configure your tailwind config file In your tailwind.config.js file, configure the purge option with the paths to all of your components so Tailwind can tree-shake unused styles in production builds:
+
+```tailwind.config.js
+module.exports = {
+   purge: [],
+   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+      extend: {},
+    },
+    variants: {
+      extend: {},
+    },
+    plugins: [],
+  }
+
+```
