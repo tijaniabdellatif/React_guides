@@ -2,6 +2,10 @@ import React from "react";
 import { faHeart,faShoppingCart,faPersonBooth } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
+
 export const Card = (props) => {
 
     /*
@@ -9,9 +13,16 @@ export const Card = (props) => {
     * Basic events
     * */
 
-    const clickHandler = (e) =>{
+    const clickHandler = () =>{
 
-        console.log(e);
+        MySwal.fire({
+            didOpen: () => {
+
+                MySwal.clickConfirm()
+            }
+        }).then(() => {
+            return MySwal.fire(<p>item added to the cart</p>)
+        })
     }
     const getAuthor = (author) => {
 
