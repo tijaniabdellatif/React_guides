@@ -1,5 +1,4 @@
 /* Here is the data */
-
 const timestamp = Date.now();
 const date = new Date(timestamp);
 const dateString = date.toLocaleString('en-US',{
@@ -10,7 +9,7 @@ const dateString = date.toLocaleString('en-US',{
 });
 
 
-const dataBook = [{
+export const dataBook = [{
 
     id:1,
     title:"American Marxism",
@@ -39,5 +38,3 @@ const dataBook = [{
     authorImage : "https://picsum.photos/32/32/?random",
     url: 'https://images-na.ssl-images-amazon.com/images/I/51EU9naCcwL._SX325_BO1,204,203,200_.jpg'
 }];
-
-export default dataBook;
