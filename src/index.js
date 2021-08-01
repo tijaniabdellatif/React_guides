@@ -4,47 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 import './style.css';
-
-const timestamp = Date.now();
-const date = new Date(timestamp);
-const dateString = date.toLocaleString('en-US',{
-    weekday:'short',
-    day :'numeric',
-    year:'numeric',
-    month : 'long',
-});
-
-//Set up data
-const book = {
-    title:"American Marxism",
-    author:"Mark R.Levin",
-    date : dateString,
-    price : 150 + ' MAD',
-    authorImage : "https://picsum.photos/32/32/?random",
-    url: 'https://images-na.ssl-images-amazon.com/images/I/51gGgVnODsL._SX322_BO1,204,203,200_.jpg'
-};
-
-const book1 = {
-    title:"It Ends with Us",
-    author:"Paperback",
-    date : dateString,
-    price : 120 + ' MAD',
-    authorImage : "https://picsum.photos/32/32/?random",
-    url: 'https://images-na.ssl-images-amazon.com/images/I/517s9eYVoHS._SX320_BO1,204,203,200_.jpg'
-};
-
-const book2 = {
-    title:"Billy Summers Hardcover",
-    author:"Stephen King",
-    date :dateString,
-    price : 190 + ' MAD',
-    authorImage : "https://picsum.photos/32/32/?random",
-    url: 'https://images-na.ssl-images-amazon.com/images/I/51EU9naCcwL._SX325_BO1,204,203,200_.jpg'
-
-}
+import dataBook from "./data/data";
 
 
-/**/
 function BookList(){
     return (
         <section className="container my-12 mx-auto px-4 md:px-12">
@@ -58,31 +20,14 @@ function BookList(){
 const Books = () => {
     return (
         <article className="flex flex-wrap -mx-1 lg:-mx-4">
-            <Card
-                title={book.title}
-                price={book.price}
-                author={book.author}
-                date={book.date}
-                url={book.url}
-                authorIma={book.authorImage}>
 
-                <p>Lorem ipsum Dolor</p>
-
-            </Card>
-            <Card
-                title={book1.title}
-                price={book1.price}
-                author={book1.author}
-                date={book1.date}
-                url={book1.url}
-                authorIma={book1.authorImage}/>
-            <Card
-                title={book2.title}
-                price={book2.price}
-                author={book2.author}
-                date={book2.date}
-                url={book2.url}
-                authorIma={book2.authorImage}/>
+            {
+               dataBook.map((book)=>{
+                   return(
+                       <Card key={book.id} book={book}></Card>
+                   );
+               })
+            }
         </article>
     );
 }
@@ -97,8 +42,9 @@ const Card = (props) => {
 
     /*Destructuring*/
     /**/
+    console.log(props);
 
-    const {url,title,date,author,authorIma} = props;
+    const {url,title,date,author,authorImage,price} = props.book;
     //console.log(props);
     return(
         <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
@@ -118,7 +64,7 @@ const Card = (props) => {
                 </header>
                 <footer className="flex items-center justify-between leading-none p-2 md:p-4">
                     <a className="flex items-center no-underline hover:underline text-black" href="#">
-                        <img alt="Placeholder" className="block rounded-full" src={authorIma} />
+                        <img alt="Placeholder" className="block rounded-full" src={authorImage} />
                         <p className="ml-2 text-sm">
                             {author.toUpperCase()}
                         </p>
@@ -128,7 +74,7 @@ const Card = (props) => {
 
                         <p className="ml-2 text-sm">
                             Price : <span className="text-red-800"
-                                          style={{color:"#617D98",fontSize:"0.75rem",marginTop:"0.25rem"}}>{props.price}</span>
+                                          style={{color:"#617D98",fontSize:"0.75rem",marginTop:"0.25rem"}}>{price}</span>
                         </p>
                     </a>
                     <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
@@ -136,9 +82,6 @@ const Card = (props) => {
                         <Font/>
                     </a>
                 </footer>
-                <div className="text-center text-red-900 text-opacity-75 text-xs my-7 px-7">
-                    {props.children}
-                </div>
 
             </div>
 
