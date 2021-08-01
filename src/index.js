@@ -64,7 +64,11 @@ const Books = () => {
                 author={book.author}
                 date={book.date}
                 url={book.url}
-                authorIma={book.authorImage} />
+                authorIma={book.authorImage}>
+
+                <p>Lorem ipsum Dolor</p>
+
+            </Card>
             <Card
                 title={book1.title}
                 price={book1.price}
@@ -91,29 +95,34 @@ const Heading = (props) =>{
 
 const Card = (props) => {
 
-    console.log(props);
+    /*Destructuring*/
+    /**/
+
+    const {url,title,date,author,authorIma} = props;
+    //console.log(props);
     return(
         <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <div className="overflow-hidden rounded-lg shadow-lg">
                 <a href="#">
-                    <img alt="Placeholder" className="block h-auto w-full" src={props.url} />
+                    <img alt="Placeholder" className="block h-auto w-full" src={url} />
                 </a>
                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
-                    <h1 className="text-lg" >
+                    <h1 className="text-lg">
                         <a className="no-underline hover:underline" style={{color:'red'}} href="#">
-                            {props.title}
+                            {title}
                         </a>
                     </h1>
                     <p className="text-grey-darker text-sm">
-                        {props.date}
+                        {date}
                     </p>
                 </header>
                 <footer className="flex items-center justify-between leading-none p-2 md:p-4">
                     <a className="flex items-center no-underline hover:underline text-black" href="#">
-                        <img alt="Placeholder" className="block rounded-full" src={props.authorIma} />
+                        <img alt="Placeholder" className="block rounded-full" src={authorIma} />
                         <p className="ml-2 text-sm">
-                            {props.author.toUpperCase()}
+                            {author.toUpperCase()}
                         </p>
+
                         <p>{/*  let x = 10 is not allowed */}</p>
                         <p> {/* 6+6 is allowed*/}</p>
 
@@ -127,7 +136,12 @@ const Card = (props) => {
                         <Font/>
                     </a>
                 </footer>
+                <div className="text-center text-red-900 text-opacity-75 text-xs my-7 px-7">
+                    {props.children}
+                </div>
+
             </div>
+
         </div>
 
     );
