@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDom from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart,faShoppingCart,faPersonBooth } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 import './style.css';
 import dataBook from "./data/data";
@@ -16,10 +16,13 @@ function BookList(){
     )
 }
 
-
 const Books = () => {
+
     return (
-        <article className="flex flex-wrap -mx-1 lg:-mx-4">
+        <article className="flex flex-wrap -mx-1 lg:-mx-4" onMouseOver={()=>{
+             console.log("This is a card article");
+        }
+        }>
 
             {
                dataBook.map((book)=>{
@@ -39,6 +42,20 @@ const Heading = (props) =>{
 }
 
 const Card = (props) => {
+
+    /*
+    *
+    * Basic events
+    * */
+
+    const clickHandler = (e) =>{
+
+        console.log(e);
+    }
+    const getAuthor = (author) => {
+
+        console.log(author);
+    }
 
     /*Destructuring*/
     /**/
@@ -79,9 +96,24 @@ const Card = (props) => {
                     </a>
                     <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
                         <span className="hidden">Like</span>
-                        <Font/>
+                        <Font name={faHeart}/>
                     </a>
                 </footer>
+                <div className='text-center my-7'>
+                    <button onClick={clickHandler}
+                        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                        Add to cart <span>
+                         <Font name={faShoppingCart}/>
+                    </span>
+                    </button>
+
+                    <button onClick={() => getAuthor(author)}
+                            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                        Author <span>
+                         <Font name={faPersonBooth}/>
+                    </span>
+                    </button>
+                </div>
 
             </div>
 
@@ -90,63 +122,12 @@ const Card = (props) => {
     );
 }
 
-const Font = () => {
+const Font = (props) => {
 
-    return (<FontAwesomeIcon icon={faHeart} />);
+
+    return (<FontAwesomeIcon icon={props.name} />);
 }
 
-
-/*
-*
-*
-* Component spliting
-* const Image = () => {
-
-    return(
-        <a href="#">
-            <img alt="Placeholder" className="block h-auto w-full" src="https://picsum.photos/600/400/?random" />
-        </a>
-    );
-}
-
-
-const Description = () => {
-    return (
-        <header className="flex items-center justify-between leading-tight p-2 md:p-4">
-            <h1 className="text-lg" >
-                <a className="no-underline hover:underline" style={{color:'red'}} href="#">
-                    Article Title
-                </a>
-            </h1>
-            <p className="text-grey-darker text-sm">
-                11/1/19
-            </p>
-        </header>
-    );
-}
-
-const Footer = () => {
-
-    return (
-        <footer className="flex items-center justify-between leading-none p-2 md:p-4">
-            <a className="flex items-center no-underline hover:underline text-black" href="#">
-                <img alt="Placeholder" className="block rounded-full" src="https://picsum.photos/32/32/?random" />
-                <p className="ml-2 text-sm">
-                    Author Name
-                </p>
-                <p className="ml-2 text-sm">
-                    Price : <span className="text-red-800"
-                                  style={{color:"#617D98",fontSize:"0.75rem",marginTop:"0.25rem"}}>120</span>
-                </p>
-            </a>
-            <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
-                <span className="hidden">Like</span>
-               <Font/>
-            </a>
-        </footer>
-    );
-}
-* */
 ReactDom.render(<BookList />,document.getElementById('root'));
 
 
